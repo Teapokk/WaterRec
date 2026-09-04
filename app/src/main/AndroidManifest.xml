@@ -35,7 +35,7 @@
 
         <!-- Serviço da Bolha Flutuante registrado -->
         <service
-            android:name=".FloatingBubbleService"
+            android:name=".ui.FloatingBubbleService"
             android:exported="false" />
 
         <!-- Caminho do RecorderService corrigido para incluir o pacote 'recorder' -->
