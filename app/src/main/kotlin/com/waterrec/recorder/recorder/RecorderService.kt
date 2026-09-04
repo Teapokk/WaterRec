@@ -1,4 +1,4 @@
-package com.waterrec.recorder.recorder
+package com.waterrec.app
 
 import android.app.Notification
 import android.app.NotificationChannel
