@@ -26,7 +26,7 @@ jobs:
       - name: 📥 Baixando o Código (Checkout)
         uses: actions/checkout@v4
 
-      - name: 📢 Status: Código Baixado
+      - name: "📢 Status: Código Baixado"
         run: |
           echo "✅ Já completei: Download do repositório inteiro."
           echo "🔍 O que estou fazendo agora? Configurando o Java JDK 17 (o motor do Android)..."
@@ -38,7 +38,7 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: 📢 Status: Java Configurado
+      - name: "📢 Status: Java Configurado"
         run: |
           echo "✅ Já completei: Configuração do ambiente Java 17."
           echo "🔧 O que estou fazendo agora? Baixando e instalando o Gradle Wrapper do zero para evitar erros de arquivo..."
@@ -51,7 +51,7 @@ jobs:
           gradle wrapper --gradle-version 8.5
           chmod +x gradlew
 
-      - name: 📢 Status: Gradle Pronto
+      - name: "📢 Status: Gradle Pronto"
         run: |
           echo "✅ Já completei: Instalação do Gradle 8.5 e permissões."
           echo "🚀 O que estou fazendo agora? Compilando o aplicativo WaterRec! Essa é a parte mais demorada, aguarde..."
@@ -59,7 +59,7 @@ jobs:
       - name: 🚀 Compilar APK (Assemble Debug)
         run: ./gradlew assembleDebug --stacktrace
 
-      - name: 📢 Status: APK Compilado
+      - name: "📢 Status: APK Compilado"
         run: |
           echo "✅ Já completei: Compilação do APK do WaterRec sem erros!"
           echo "📦 O que estou fazendo agora? Empacotando e enviando o arquivo final para os 'Artifacts' do GitHub..."
