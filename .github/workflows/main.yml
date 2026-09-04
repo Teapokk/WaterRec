@@ -1,0 +1,87 @@
+name: 🌊 WaterRec Premium CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 🏗️ Build Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: 📢 Iniciando os Trabalhos
+        run: |
+          echo "=================================================="
+          echo "🤖 Olá! Eu sou o robô de build do WaterRec."
+          echo "O que estou fazendo agora? Começando a esteira de produção!"
+          echo "=================================================="
+
+      - name: 📥 Baixando o Código (Checkout)
+        uses: actions/checkout@v4
+
+      - name: 📢 Status: Código Baixado
+        run: |
+          echo "✅ Já completei: Download do repositório inteiro."
+          echo "🔍 O que estou fazendo agora? Configurando o Java JDK 17 (o motor do Android)..."
+
+      - name: ⚙️ Setup Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: 📢 Status: Java Configurado
+        run: |
+          echo "✅ Já completei: Configuração do ambiente Java 17."
+          echo "🔧 O que estou fazendo agora? Baixando e instalando o Gradle Wrapper do zero para evitar erros de arquivo..."
+
+      - name: 🛠️ Bootstrap Gradle Wrapper
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip
+          unzip -q gradle-8.5-bin.zip
+          export PATH=$PWD/gradle-8.5/bin:$PATH
+          gradle wrapper --gradle-version 8.5
+          chmod +x gradlew
+
+      - name: 📢 Status: Gradle Pronto
+        run: |
+          echo "✅ Já completei: Instalação do Gradle 8.5 e permissões."
+          echo "🚀 O que estou fazendo agora? Compilando o aplicativo WaterRec! Essa é a parte mais demorada, aguarde..."
+
+      - name: 🚀 Compilar APK (Assemble Debug)
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: 📢 Status: APK Compilado
+        run: |
+          echo "✅ Já completei: Compilação do APK do WaterRec sem erros!"
+          echo "📦 O que estou fazendo agora? Empacotando e enviando o arquivo final para os 'Artifacts' do GitHub..."
+
+      - name: 📦 Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: 📱 WaterRec-Debug-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 15
+
+      - name: 📢 Status Final e Resumo
+        run: |
+          echo "✅ Já completei: Upload do APK finalizado."
+          echo "🎉 O que estou fazendo agora? Gerando o relatório de sucesso para você!"
+          
+          echo "# 🌊 WaterRec Construído com Sucesso! ✅" >> $GITHUB_STEP_SUMMARY
+          echo "### 🤖 Relatório de Atividades do Robô:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **Já completei:** Download do código-fonte da branch \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **Já completei:** Instalação do Java 17 e recriação do Gradle 8.5" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **Já completei:** Compilação de todo o projeto Kotlin" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **Já completei:** Geração do APK e liberação para download!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 O que você faz agora?" >> $GITHUB_STEP_SUMMARY
+          echo "Vá na aba **Artifacts** na parte inferior desta página e baixe o arquivo **📱 WaterRec-Debug-APK** para testar no seu celular." >> $GITHUB_STEP_SUMMARY
