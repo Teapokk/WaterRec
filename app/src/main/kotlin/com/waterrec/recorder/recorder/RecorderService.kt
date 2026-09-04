@@ -1,4 +1,4 @@
-package com.waterrec.app
+package com.waterrec.recorder.recorder
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -73,7 +73,12 @@ class RecorderService : Service() {
 
     private fun startRecordingProcess() {
         if (isRunning) return
-        startForeground(NOTIFICATION_ID, createNotification())
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(NOTIFICATION_ID, createNotification(), android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION)
+        } else {
+            startForeground(NOTIFICATION_ID, createNotification())
+        }
         
         try {
             initMediaRecorder()
@@ -171,7 +176,13 @@ class RecorderService : Service() {
 
         isRunning = false
         isPaused = false
-        stopForeground(true)
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            stopForeground(STOP_FOREGROUND_REMOVE)
+        } else {
+            @Suppress("DEPRECATION")
+            stopForeground(true)
+        }
         stopSelf()
     }
 
@@ -182,4 +193,3 @@ class RecorderService : Service() {
         stopRecordingProcess()
     }
 }
-
