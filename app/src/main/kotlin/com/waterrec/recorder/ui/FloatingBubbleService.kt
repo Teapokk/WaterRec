@@ -1,4 +1,4 @@
-package com.waterrec.recorder.ui
+package com.waterrec.app
 
 import android.app.Service
 import android.content.Intent
@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.waterrec.recorder.R
 import com.waterrec.recorder.recorder.RecorderService
+import com.waterrec.app.R
 
 class FloatingBubbleService : Service() {
 
