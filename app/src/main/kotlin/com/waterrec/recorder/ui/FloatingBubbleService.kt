@@ -18,7 +18,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.waterrec.recorder.R
 import com.waterrec.recorder.recorder.RecorderService
-import com.waterrec.app.R
 
 class FloatingBubbleService : Service() {
 
