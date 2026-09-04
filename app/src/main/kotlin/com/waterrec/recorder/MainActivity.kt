@@ -1,4 +1,4 @@
-package com.waterrec.app
+package com.waterrec.recorder
 
 import android.content.Context
 import android.content.Intent
