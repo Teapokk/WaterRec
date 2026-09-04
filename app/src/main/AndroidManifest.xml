@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.waterrec.app">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     
@@ -34,8 +33,14 @@
             </intent-filter>
         </activity>
 
+        <!-- Serviço da Bolha Flutuante registrado -->
         <service
-            android:name=".RecorderService"
+            android:name=".FloatingBubbleService"
+            android:exported="false" />
+
+        <!-- Caminho do RecorderService corrigido para incluir o pacote 'recorder' -->
+        <service
+            android:name=".recorder.RecorderService"
             android:foregroundServiceType="mediaProjection|camera|microphone"
             android:exported="false" />
 
