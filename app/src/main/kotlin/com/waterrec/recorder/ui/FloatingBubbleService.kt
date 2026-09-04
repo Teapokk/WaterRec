@@ -16,8 +16,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.waterrec.recorder.R
-import com.waterrec.recorder.recorder.RecorderService
+import com.waterrec.app.R
+import com.waterrec.app.recorder.RecorderService
 
 class FloatingBubbleService : Service() {
 
@@ -228,7 +228,7 @@ class FloatingBubbleService : Service() {
     }
 
     private fun openSettings() {
-        val intent = Intent(this, com.waterrec.recorder.MainActivity::class.java)
+        val intent = Intent(this, com.waterrec.app.MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
