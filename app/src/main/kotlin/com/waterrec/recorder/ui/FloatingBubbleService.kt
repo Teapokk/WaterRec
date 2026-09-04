@@ -1,4 +1,4 @@
-package com.waterrec.app
+package com.waterrec.recorder.ui
 
 import android.app.Service
 import android.content.Intent
@@ -16,8 +16,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.waterrec.app.R
-import com.waterrec.app.recorder.RecorderService
+
+// IMPORTS OBRIGATÓRIOS CONFORME SUAS PASTAS:
+import com.waterrec.recorder.R
+import com.waterrec.recorder.MainActivity
+import com.waterrec.recorder.recorder.RecorderService
 
 class FloatingBubbleService : Service() {
 
@@ -43,6 +46,7 @@ class FloatingBubbleService : Service() {
             type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             } else {
+                @Suppress("DEPRECATION")
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
             }
             format = PixelFormat.TRANSLUCENT
@@ -80,10 +84,11 @@ class FloatingBubbleService : Service() {
     }
 
     private fun createGradientDrawable(): android.graphics.drawable.GradientDrawable {
-        return android.graphics.drawable.GradientDrawable(android.graphics.drawable.GradientDrawable.Orientation.TOP_BOTTOM,
+        return android.graphics.drawable.GradientDrawable(
+            android.graphics.drawable.GradientDrawable.Orientation.TOP_BOTTOM,
             intArrayOf(
-                resources.getColor(R.color.gradient_start, null),
-                resources.getColor(R.color.gradient_end, null)
+                ContextCompat.getColor(this, R.color.gradient_start),
+                ContextCompat.getColor(this, R.color.gradient_end)
             )
         ).apply {
             cornerRadius = 60f
@@ -101,6 +106,7 @@ class FloatingBubbleService : Service() {
             type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             } else {
+                @Suppress("DEPRECATION")
                 WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
             }
             format = PixelFormat.TRANSLUCENT
@@ -127,7 +133,7 @@ class FloatingBubbleService : Service() {
     private fun createMenuView(): LinearLayout {
         val menuContainer = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundColor(resources.getColor(R.color.color_primary, null))
+            setBackgroundColor(ContextCompat.getColor(this@FloatingBubbleService, R.color.color_primary))
             val padding = 16
             setPadding(padding, padding, padding, padding)
         }
@@ -135,7 +141,7 @@ class FloatingBubbleService : Service() {
         val title = android.widget.TextView(this).apply {
             text = "Recording Controls"
             textSize = 14f
-            setTextColor(resources.getColor(R.color.color_text_primary, null))
+            setTextColor(ContextCompat.getColor(this@FloatingBubbleService, R.color.color_text_primary))
             setTypeface(null, android.graphics.Typeface.BOLD)
         }
         menuContainer.addView(title)
@@ -178,13 +184,13 @@ class FloatingBubbleService : Service() {
         val icon = ImageView(this).apply {
             layoutParams = LinearLayout.LayoutParams(32, 32)
             setImageDrawable(ContextCompat.getDrawable(this@FloatingBubbleService, iconRes))
-            setColorFilter(resources.getColor(R.color.color_text_primary, null))
+            setColorFilter(ContextCompat.getColor(this@FloatingBubbleService, R.color.color_text_primary))
         }
 
         val text = android.widget.TextView(this).apply {
             text = label
             textSize = 12f
-            setTextColor(resources.getColor(R.color.color_text_primary, null))
+            setTextColor(ContextCompat.getColor(this@FloatingBubbleService, R.color.color_text_primary))
             layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
             setPadding(12, 0, 0, 0)
         }
@@ -228,7 +234,7 @@ class FloatingBubbleService : Service() {
     }
 
     private fun openSettings() {
-        val intent = Intent(this, com.waterrec.app.MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
